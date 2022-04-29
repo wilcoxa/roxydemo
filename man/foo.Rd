@@ -15,3 +15,9 @@ bar
 \description{
 Foo
 }
+\section{Tips and tricks}{
+\itemize{
+  \item Here is the custom roxygen section
+}
+}
+
