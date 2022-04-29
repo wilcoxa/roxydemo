@@ -1,11 +1,13 @@
 
 roxy_tag_parse.roxy_tag_tip <- function(x) {
-    tag_markdown(x)
+    asNamespace("roxygen2")$tag_markdown(x)
 }
 
 roxy_tag_rd.roxy_tag_tip <- function(x, base_path, env) {
-    rd_section("tip", x$val)
+    asNamespace("roxygen2")$rd_section("tip", x$val)
 }
+
+#' @export
 
 format.rd_section_tip <- function(x, ...) {
     paste0(
@@ -15,4 +17,12 @@ format.rd_section_tip <- function(x, ...) {
         "}\n",
         "}\n"
     )
+}
+
+.onLoad <- function(libname, pkgname) {
+  if (isNamespaceLoaded("roxygen2")) {
+    library(roxygen2)
+    registerS3method("roxy_tag_parse", "roxy_tag_tip", roxy_tag_parse.roxy_tag_tip)
+    registerS3method("roxy_tag_rd", "roxy_tag_tip", roxy_tag_rd.roxy_tag_tip)
+  }
 }
